@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/SceneComponent.h"
 #include "MyColorCpp.generated.h"
 
 UCLASS()
@@ -30,4 +31,18 @@ public:
 private:
 	UMaterialInstanceDynamic* DynamicMaterial;
 
+	//Offset to move
+	UPROPERTY(EditAnywhere)
+		FVector MoveOffset;
+
+	//Speed
+	UPROPERTY(EditAnywhere)
+		float Speed = 1.0f;
+
+	// Computed Locations
+	FVector StartRelativeLocation;
+	FVector MoveOffsetNorm;
+	float MaxDistance = 0.0f;
+	float CurDistance = 0.0f;
+	int MoveDirection = 1;
 };

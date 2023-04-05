@@ -5,6 +5,8 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Components/StaticMeshComponent.h"
 #include "Materials/MaterialInterface.h"
+#include "Components/SceneComponent.h"
+#include <GameFramework/RootMotionSource.h>
 
 // Sets default values
 AMyColorCpp::AMyColorCpp()
@@ -24,6 +26,14 @@ void AMyColorCpp::BeginPlay()
 
 	DynamicMaterial = UMaterialInstanceDynamic::Create(Material, NULL);
 	Cube->SetMaterial(0, DynamicMaterial);
+
+	// Set Start Location
+	StartRelativeLocation = GetActorLocation();
+
+	//Compute Normalized movement 
+	MoveOffsetNorm = MoveOffset;
+	MoveOffsetNorm.Normalize();
+	MaxDistance = MoveOffset.Length();
 	
 }
 
@@ -34,6 +44,13 @@ void AMyColorCpp::Tick(float DeltaTime)
 
 	float blend = 0.5f + FMath::Cos(GetWorld()->TimeSeconds) / AMyColorCpp::mytime;
 	DynamicMaterial->SetScalarParameterValue(TEXT("Blend"), blend);
+
+	//Set currant distance
+	CurDistance += DeltaTime * Speed * MoveDirection;
+	if (CurDistance >= MaxDistance || CurDistance < 0.0f)
+		MoveDirection *= -1;
+	// compute and set Current Location
+	SetActorLocation(StartRelativeLocation + MoveOffsetNorm * CurDistance);
 
 }
 
