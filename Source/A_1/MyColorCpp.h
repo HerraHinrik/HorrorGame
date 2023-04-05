@@ -17,7 +17,7 @@ public:
 	AMyColorCpp();
 
 	UPROPERTY(Editanywhere)
-		float mytime = 1.f;
+		float BlendSpeed = 1.f;
 
 
 protected:

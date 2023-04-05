@@ -42,7 +42,7 @@ void AMyColorCpp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	float blend = 0.5f + FMath::Cos(GetWorld()->TimeSeconds) / AMyColorCpp::mytime;
+	float blend = 0.5f + FMath::Cos(GetWorld()->TimeSeconds) / AMyColorCpp::BlendSpeed;
 	DynamicMaterial->SetScalarParameterValue(TEXT("Blend"), blend);
 
 	//Set currant distance
